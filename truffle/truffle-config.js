@@ -17,7 +17,12 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
-
+ require('dotenv').config({path:"D:/ONEDRIVE/OneDrive - BUET/Documents/Authentica/config.env"});
+ var HDWalletProvider = require("truffle-hdwallet-provider");
+ var mnemonic = process.env.NEMONIC;
+ var tokenKey = process.env.ENDPOINT_KEY;
+ const prvtKeys = [process.env.PRVT_KEY] ; 
+ 
 // require('dotenv').config();
 // const mnemonic = process.env["MNEMONIC"];
 // const infuraProjectId = process.env["INFURA_PROJECT_ID"];
@@ -45,9 +50,25 @@ module.exports = {
     //
     development: {
       host: "127.0.0.1",     // Localhost (default: none)
-      port: 8545,            // Standard Ethereum port (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
     },
+    
+    rinkeby:{
+      host: "localhost",
+      provider: function() {
+        return new HDWalletProvider({
+          privateKeys:prvtKeys , 
+          providerOrUrl: 'https://rinkeby.infura.io/v3/4d33432eff60475286dd758f6b31d15f', 
+          numberOfAddresses: 1
+        } )
+          },
+      network_id:42
+      , gas : 6700000
+      , gasPrice : 10000000000
+      , skipDryRun : true 
+    }
+
     //
     // An additional network, but with some advanced options…
     // advanced: {
